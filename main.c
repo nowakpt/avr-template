@@ -1,5 +1,5 @@
 /* 
- * Blinky example of an AVR project.
+ * AVR project template - blinking LED example.
  * 
  * Copyright 2017 Patryk Nowak
  */

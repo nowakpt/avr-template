@@ -3,7 +3,7 @@
 ###########################################################
 
 # HERE: set output binary name
-OUT           = blinky
+OUT           = example
 MCU           = atmega328p
 CPU_FREQ      = 16000000
 PORT          = /dev/ttyUSB0
