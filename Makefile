@@ -49,31 +49,37 @@ all: $(OUTDIR)/$(OUT).hex
 
 # Create output directory
 $(OUTDIR):
-	$(MK) $@
+	@echo Creating directory: $@
+	@$(MK) $@
 
 -include $(DEPS)
 
 # Create objects from C source files
 $(OUTDIR)/%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDEPATHS) -c $< -o $@ -MMD -MF $(@:.o=.d)
+	@echo Building: $<
+	@$(CC) $(CFLAGS) $(INCLUDEPATHS) -c $< -o $@ -MMD -MF $(@:.o=.d)
 
 
 # Link C objects to an .elf file
 $(OUTDIR)/$(OUT).elf: $(OUTDIR) $(C_OBJS)
-	$(CC) $(LDFLAGS) $(C_OBJS) -o $(OUTDIR)/$(OUT).elf
+	@echo Linking: $@
+	@$(CC) $(LDFLAGS) $(C_OBJS) -o $(OUTDIR)/$(OUT).elf
 
 
 # Convert .elf file to .hex
 $(OUTDIR)/$(OUT).hex: $(OUTDIR)/$(OUT).elf
-	$(OBJCOPY) -O ihex $< $@
+	@echo Generating: $@
+	@$(OBJCOPY) -O ihex $< $@
 
 
 # Program device
 install: $(OUTDIR)/$(OUT).hex
+	@echo Programming device:
 	avrdude -v -c arduino -p $(MCU) -P $(PORT) -b 115200 -U flash:w:$<
 
 # Do the clean-up
 clean:
+	@echo Cleaning up:
 	$(RM) $(OUTDIR)
 
 
